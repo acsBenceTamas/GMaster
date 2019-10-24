@@ -26,6 +26,8 @@ namespace GMaster.Core.Camera
         private TextBinValue shutter;
         private CameraState state;
         private TextBinValue whiteBalance;
+        private TextBinValue aspectRatio;
+        private TextBinValue quality;
         private int zoom;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -41,6 +43,36 @@ namespace GMaster.Core.Camera
                 }
 
                 whiteBalance = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TextBinValue AspectRatio
+        {
+            get => aspectRatio;
+            set
+            {
+                if (value.Equals(aspectRatio))
+                {
+                    return;
+                }
+
+                aspectRatio = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public TextBinValue PhotoQuality
+        {
+            get => quality;
+            set
+            {
+                if (value.Equals(quality))
+                {
+                    return;
+                }
+
+                quality = value;
                 OnPropertyChanged();
             }
         }
@@ -244,6 +276,8 @@ namespace GMaster.Core.Camera
                 OnPropertyChanged(nameof(Shutter));
                 OnPropertyChanged(nameof(Iso));
                 OnPropertyChanged(nameof(WhiteBalance));
+                OnPropertyChanged(nameof(AspectRatio));
+                OnPropertyChanged(nameof(PhotoQuality));
             }
         }
 
@@ -339,6 +373,8 @@ namespace GMaster.Core.Camera
             Shutter = default(TextBinValue);
             Iso = default(TextBinValue);
             WhiteBalance = default(TextBinValue);
+            AspectRatio = default(TextBinValue);
+            PhotoQuality = default(TextBinValue);
             CameraMode = CameraMode.Unknown;
             FocusAreas = null;
             FocusMode = FocusMode.Unknown;

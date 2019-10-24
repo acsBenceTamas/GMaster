@@ -38,16 +38,6 @@
             }
         }
 
-        public ICollection<string> WhiteBalances
-        {
-            get
-            {
-                return lumixState?.MenuSet?.WhiteBalances
-                    .Where(i => lumixState.CurMenu.Enabled.ContainsKey(i.Id)).Select(i => i.Text).ToList()
-                    ?? new List<string>();
-            }
-        }
-
         public AutoFocusMode AutoFocusMode => lumixState?.AutoFocusMode ?? AutoFocusMode.Unknown;
 
         public float BatteryLevel
@@ -120,6 +110,42 @@
             }
         }
 
+        public string CurrentPhotoQuality
+        {
+            get
+            {
+                if (lumixState?.PhotoQuality.Text == null)
+                {
+                    return null;
+                }
+
+                return lumixState.MenuSet.PhotoQuality.FirstOrDefault(i => i.Text.EndsWith(lumixState.PhotoQuality.Text, StringComparison.OrdinalIgnoreCase)).Text;
+            }
+
+            set
+            {
+                AsyncMenuItemSetter(lumixState?.MenuSet?.PhotoQuality.SingleOrDefault(a => a.Text == value));
+            }
+        }
+
+        public string CurrentAspectRatio
+        {
+            get
+            {
+                if (lumixState?.AspectRatio.Text == null)
+                {
+                    return null;
+                }
+
+                return lumixState.MenuSet.PhotoAspects.FirstOrDefault(i => i.Text.EndsWith(lumixState.AspectRatio.Text, StringComparison.OrdinalIgnoreCase)).Text;
+            }
+
+            set
+            {
+                AsyncMenuItemSetter(lumixState?.MenuSet?.PhotoAspects.SingleOrDefault(a => a.Text == value));
+            }
+        }
+
         public string CurrentIso
         {
             get
@@ -176,6 +202,36 @@
             get
             {
                 return lumixState?.MenuSet?.IsoValues
+                    .Where(i => lumixState.CurMenu.Enabled.ContainsKey(i.Id)).Select(i => i.Text).ToList()
+                    ?? new List<string>();
+            }
+        }
+
+        public ICollection<string> AspectRatios
+        {
+            get
+            {
+                return lumixState?.MenuSet?.PhotoAspects
+                    .Where(i => lumixState.CurMenu.Enabled.ContainsKey(i.Id)).Select(i => i.Text).ToList()
+                    ?? new List<string>();
+            }
+        }
+
+        public ICollection<string> PhotoQualities
+        {
+            get
+            {
+                return lumixState?.MenuSet?.PhotoQuality
+                    .Where(i => lumixState.CurMenu.Enabled.ContainsKey(i.Id)).Select(i => i.Text).ToList()
+                    ?? new List<string>();
+            }
+        }
+
+        public ICollection<string> WhiteBalances
+        {
+            get
+            {
+                return lumixState?.MenuSet?.WhiteBalances
                     .Where(i => lumixState.CurMenu.Enabled.ContainsKey(i.Id)).Select(i => i.Text).ToList()
                     ?? new List<string>();
             }
@@ -360,6 +416,8 @@
                             OnPropertyChanged(nameof(IsoValues));
                             OnPropertyChanged(nameof(Apertures));
                             OnPropertyChanged(nameof(WhiteBalances));
+                            OnPropertyChanged(nameof(AspectRatios));
+                            OnPropertyChanged(nameof(PhotoQualities));
                             break;
 
                         case nameof(LumixState.RecState):
@@ -398,6 +456,14 @@
 
                         case nameof(LumixState.WhiteBalance):
                             OnPropertyChanged(nameof(CurrentWhiteBalance));
+                            break;
+
+                        case nameof(LumixState.AspectRatio):
+                            OnPropertyChanged(nameof(CurrentAspectRatio));
+                            break;
+
+                        case nameof(LumixState.PhotoQuality):
+                            OnPropertyChanged(nameof(CurrentPhotoQuality));
                             break;
 
                         case nameof(LumixState.Zoom):
@@ -453,11 +519,15 @@
                 OnPropertyChanged(nameof(Apertures));
                 OnPropertyChanged(nameof(IsoValues));
                 OnPropertyChanged(nameof(WhiteBalances));
+                OnPropertyChanged(nameof(AspectRatios));
+                OnPropertyChanged(nameof(PhotoQualities));
 
                 OnPropertyChanged(nameof(CurrentAperture));
                 OnPropertyChanged(nameof(CurrentShutter));
                 OnPropertyChanged(nameof(CurrentIso));
                 OnPropertyChanged(nameof(CurrentWhiteBalance));
+                OnPropertyChanged(nameof(CurrentAspectRatio));
+                OnPropertyChanged(nameof(CurrentPhotoQuality));
 
                 OnPropertyChanged(nameof(CanCapture));
                 OnPropertyChanged(nameof(MaxZoom));

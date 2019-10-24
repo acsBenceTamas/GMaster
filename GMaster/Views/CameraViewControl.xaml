@@ -28,6 +28,26 @@
 
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,20">
                         <StackPanel Width="100" Margin="0,0,10,0">
+                            <TextBlock TextAlignment="Center">Photo Quality</TextBlock>
+                            <ComboBox HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding PhotoQualities}"
+                                          HorizontalContentAlignment="Center"
+                                          SelectedItem="{Binding CurrentPhotoQuality, Mode=TwoWay}"/>
+                            <TextBlock HorizontalAlignment="Stretch" 
+                                           Text="{Binding CurrentPhotoQuality}"
+                                           VerticalAlignment="Stretch" TextAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Width="100" Margin="0,0,10,0">
+                            <TextBlock TextAlignment="Center">Aspect Ratio</TextBlock>
+                            <ComboBox HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding AspectRatios}"
+                                          HorizontalContentAlignment="Center"
+                                          SelectedItem="{Binding CurrentAspectRatio, Mode=TwoWay}"/>
+                            <TextBlock HorizontalAlignment="Stretch" 
+                                           Text="{Binding CurrentAspectRatio}"
+                                           VerticalAlignment="Stretch" TextAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Width="100" Margin="0,0,10,0">
                             <TextBlock TextAlignment="Center">White Balance</TextBlock>
                             <ComboBox HorizontalAlignment="Stretch"
                                           ItemsSource="{Binding WhiteBalances}"
@@ -71,11 +91,14 @@
                                           SelectedItem="{Binding CurrentIso, Mode=TwoWay}" />
                         </StackPanel>
 
-                        <local:Adjuster IsEnabled="{Binding CanPowerZoom, Mode=TwoWay}" Width="200"
-                                            PressedReleased="ZoomAdjuster_OnPressedReleased"
-                                            Minimum="{Binding MinZoom, Mode=TwoWay}"
-                                            Maximum="{Binding MaxZoom, Mode=TwoWay}"
-                                            Value="{Binding CurentZoom, Mode=TwoWay}" />
+                        <StackPanel Width="200" Margin="0,0,10,0">
+                            <TextBlock TextAlignment="Center">Zoom</TextBlock>
+                            <local:Adjuster IsEnabled="{Binding CanPowerZoom, Mode=TwoWay}" HorizontalAlignment="Stretch"
+                                                PressedReleased="ZoomAdjuster_OnPressedReleased"
+                                                Minimum="{Binding MinZoom, Mode=TwoWay}"
+                                                Maximum="{Binding MaxZoom, Mode=TwoWay}"
+                                                Value="{Binding CurentZoom, Mode=TwoWay}" />
+                        </StackPanel>
 
                         <local:Adjuster Visibility="{Binding CanManualFocus, Mode=TwoWay, Converter={StaticResource TrueToVisibileConverter}}" Width="200" Margin="10,0,0,0"
                                             RepeatClick="FocusAdjuster_OnRepeatClick"
