@@ -28,6 +28,17 @@
 
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,20">
                         <StackPanel Width="100" Margin="0,0,10,0">
+                            <TextBlock TextAlignment="Center">White Balance</TextBlock>
+                            <ComboBox HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding WhiteBalances}"
+                                          HorizontalContentAlignment="Center"
+                                          SelectedItem="{Binding CurrentWhiteBalance, Mode=TwoWay}"/>
+                            <TextBlock HorizontalAlignment="Stretch" 
+                                           Text="{Binding CurrentWhiteBalance}"
+                                           VerticalAlignment="Stretch" TextAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Width="100" Margin="0,0,10,0">
+                            <TextBlock TextAlignment="Center">Aperture</TextBlock>
                             <ComboBox HorizontalAlignment="Stretch"
                                           ItemsSource="{Binding Apertures}"
                                           HorizontalContentAlignment="Center"
@@ -40,6 +51,7 @@
                             </Border>
                         </StackPanel>
                         <StackPanel Width="100" Margin="0,0,10,0">
+                            <TextBlock TextAlignment="Center">Shutter</TextBlock>
                             <ComboBox HorizontalAlignment="Stretch"
                                           ItemsSource="{Binding ShutterSpeeds}"
                                           HorizontalContentAlignment="Center"
@@ -52,6 +64,7 @@
                             </Border>
                         </StackPanel>
                         <StackPanel Width="100" Margin="0,0,10,0">
+                            <TextBlock TextAlignment="Center">ISO</TextBlock>
                             <ComboBox HorizontalAlignment="Stretch"
                                           ItemsSource="{Binding IsoValues}"
                                           VerticalAlignment="Stretch" HorizontalContentAlignment="Center"

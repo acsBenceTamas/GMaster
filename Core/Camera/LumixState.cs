@@ -25,9 +25,25 @@ namespace GMaster.Core.Camera
         private RecState recState;
         private TextBinValue shutter;
         private CameraState state;
+        private TextBinValue whiteBalance;
         private int zoom;
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public TextBinValue WhiteBalance
+        {
+            get => whiteBalance;
+            set
+            {
+                if (value.Equals(whiteBalance))
+                {
+                    return;
+                }
+
+                whiteBalance = value;
+                OnPropertyChanged();
+            }
+        }
 
         public TextBinValue Aperture
         {
@@ -227,6 +243,7 @@ namespace GMaster.Core.Camera
                 OnPropertyChanged(nameof(Aperture));
                 OnPropertyChanged(nameof(Shutter));
                 OnPropertyChanged(nameof(Iso));
+                OnPropertyChanged(nameof(WhiteBalance));
             }
         }
 
@@ -321,6 +338,7 @@ namespace GMaster.Core.Camera
             Aperture = default(TextBinValue);
             Shutter = default(TextBinValue);
             Iso = default(TextBinValue);
+            WhiteBalance = default(TextBinValue);
             CameraMode = CameraMode.Unknown;
             FocusAreas = null;
             FocusMode = FocusMode.Unknown;

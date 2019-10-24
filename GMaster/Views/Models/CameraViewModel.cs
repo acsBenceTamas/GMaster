@@ -38,6 +38,16 @@
             }
         }
 
+        public ICollection<string> WhiteBalances
+        {
+            get
+            {
+                return lumixState?.MenuSet?.WhiteBalances
+                    .Where(i => lumixState.CurMenu.Enabled.ContainsKey(i.Id)).Select(i => i.Text).ToList()
+                    ?? new List<string>();
+            }
+        }
+
         public AutoFocusMode AutoFocusMode => lumixState?.AutoFocusMode ?? AutoFocusMode.Unknown;
 
         public float BatteryLevel
@@ -91,6 +101,24 @@
         }
 
         public int CurrentFocus => lumixState?.CurrentFocus ?? 0;
+
+        public string CurrentWhiteBalance
+        {
+            get
+            {
+                if (lumixState?.WhiteBalance.Text == null)
+                {
+                    return null;
+                }
+
+                return lumixState.MenuSet.WhiteBalances.FirstOrDefault(i => i.Text.EndsWith(lumixState.WhiteBalance.Text, StringComparison.OrdinalIgnoreCase)).Text;
+            }
+
+            set
+            {
+                AsyncMenuItemSetter(lumixState?.MenuSet?.WhiteBalances.SingleOrDefault(a => a.Text == value));
+            }
+        }
 
         public string CurrentIso
         {
@@ -331,6 +359,7 @@
                             OnPropertyChanged(nameof(ShutterSpeeds));
                             OnPropertyChanged(nameof(IsoValues));
                             OnPropertyChanged(nameof(Apertures));
+                            OnPropertyChanged(nameof(WhiteBalances));
                             break;
 
                         case nameof(LumixState.RecState):
@@ -365,6 +394,10 @@
 
                         case nameof(LumixState.Iso):
                             OnPropertyChanged(nameof(CurrentIso));
+                            break;
+
+                        case nameof(LumixState.WhiteBalance):
+                            OnPropertyChanged(nameof(CurrentWhiteBalance));
                             break;
 
                         case nameof(LumixState.Zoom):
@@ -419,10 +452,12 @@
                 OnPropertyChanged(nameof(ShutterSpeeds));
                 OnPropertyChanged(nameof(Apertures));
                 OnPropertyChanged(nameof(IsoValues));
+                OnPropertyChanged(nameof(WhiteBalances));
 
                 OnPropertyChanged(nameof(CurrentAperture));
                 OnPropertyChanged(nameof(CurrentShutter));
                 OnPropertyChanged(nameof(CurrentIso));
+                OnPropertyChanged(nameof(CurrentWhiteBalance));
 
                 OnPropertyChanged(nameof(CanCapture));
                 OnPropertyChanged(nameof(MaxZoom));
