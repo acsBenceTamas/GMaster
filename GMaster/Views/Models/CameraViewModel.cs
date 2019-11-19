@@ -207,26 +207,6 @@
             }
         }
 
-        public ICollection<string> AspectRatios
-        {
-            get
-            {
-                return lumixState?.MenuSet?.PhotoAspects
-                    .Where(i => lumixState.CurMenu.Enabled.ContainsKey(i.Id)).Select(i => i.Text).ToList()
-                    ?? new List<string>();
-            }
-        }
-
-        public ICollection<string> PhotoQualities
-        {
-            get
-            {
-                return lumixState?.MenuSet?.PhotoQuality
-                    .Where(i => lumixState.CurMenu.Enabled.ContainsKey(i.Id)).Select(i => i.Text).ToList()
-                    ?? new List<string>();
-            }
-        }
-
         public ICollection<string> WhiteBalances
         {
             get
@@ -416,8 +396,6 @@
                             OnPropertyChanged(nameof(IsoValues));
                             OnPropertyChanged(nameof(Apertures));
                             OnPropertyChanged(nameof(WhiteBalances));
-                            OnPropertyChanged(nameof(AspectRatios));
-                            OnPropertyChanged(nameof(PhotoQualities));
                             break;
 
                         case nameof(LumixState.RecState):
@@ -519,8 +497,6 @@
                 OnPropertyChanged(nameof(Apertures));
                 OnPropertyChanged(nameof(IsoValues));
                 OnPropertyChanged(nameof(WhiteBalances));
-                OnPropertyChanged(nameof(AspectRatios));
-                OnPropertyChanged(nameof(PhotoQualities));
 
                 OnPropertyChanged(nameof(CurrentAperture));
                 OnPropertyChanged(nameof(CurrentShutter));

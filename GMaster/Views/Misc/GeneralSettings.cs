@@ -15,7 +15,7 @@
             if (localSettings.Values.TryGetValue("settings", out var settingsobj) && settingsobj is string settings)
             {
                 var dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(settings);
-                Load(dict);
+                //Load(dict);
             }
 
             PropertyChanged += GeneralSettings_PropertyChanged;
